@@ -7,12 +7,16 @@ import {
   Param,
   Post,
   Put,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/jwt-auth.guard';
+import { IMiddlewareRequest } from '../auth/interface/middlewareRequest.interface';
 
 @ApiTags('Users')
 @Controller('users')
@@ -20,6 +24,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   @Get()
   getAll() {
     return this.userService.getAll();
@@ -46,11 +51,11 @@ export class UserController {
     return this.userService.getById(id);
   }
 
-  @HttpCode(HttpStatus.CREATED)
-  @Post()
-  createUser(@Body() userDto: CreateUserDto) {
-    return this.userService.createUser(userDto);
-  }
+  // @HttpCode(HttpStatus.CREATED)
+  // @Post()
+  // createUser(@Body() userDto: CreateUserDto) {
+  //   return this.userService.createUser(userDto);
+  // }
 
   @Put('/:id')
   updateUser(@Body() userData: UpdateUserDto, @Param('id') id: string) {
