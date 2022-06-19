@@ -31,7 +31,11 @@ export class UserService {
   updateUser(userData: Prisma.UserUpdateInput, userId: string): Promise<User> {
     return this.prismaService.user.update({
       where: { id: Number(userId) },
-      data: { name: userData.name, city: userData.city },
+      data: {
+        name: userData.name,
+        city: userData.city,
+        avatar: userData.avatar,
+      },
     });
   }
 }

@@ -2,10 +2,10 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
-  IsNumber,
+  IsNumber, IsOptional,
   IsString,
-  Length,
-} from 'class-validator';
+  Length
+} from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -22,6 +22,10 @@ export class CreateUserDto {
 
   @IsNumber()
   public age: number;
+
+  @IsString()
+  @IsOptional()
+  public avatar: string;
 
   @IsString()
   public city: string;
